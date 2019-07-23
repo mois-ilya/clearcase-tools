@@ -1,0 +1,3 @@
+gui/scss/modules/tables/_tables.scss
+pub/styles/styles.css
+pub/styles/styles.min.css
