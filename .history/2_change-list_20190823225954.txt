@@ -1,0 +1,4 @@
+pms\project\pub_project_checklist.cfm
+gui\js\atomic\4__layouts\Panel.js
+pub\scripts\getApp.js
+pub\scripts\getApp.min.js

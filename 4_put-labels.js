@@ -7,8 +7,9 @@ const logName = `.\\logs\\${(new Date()).toISOString()
                     .replace(/\..+/, '')
                     .replace(/:/g, '-')}`;
 const inputFile = './2_change-list.txt';
-let label = process.argv[2];
+const needMigrate = process.argv.includes('--migrate');
 
+let label = process.argv[2];
 let comment;
 let text;
 
@@ -32,7 +33,7 @@ const getVersion = file => {
 
 const applyLabel = async version => {
     const stdout = execSync(`cleartool mklabel -replace "${label}" "${version}"`, { encoding: 'utf8' });
-    addToText(version);
+    addToText('/GetCaesar/' + version);
     fs.appendFileSync(`${logName}.cleartool.txt`, stdout);
     fs.writeFileSync(inputFile, '', error => console.log(error));
 };
@@ -55,7 +56,7 @@ askQuestion(`Label to apply (${label}): `).then(answer => {
     const files = fs.readFileSync(inputFile, {encoding: 'utf8'})
         .split('\n')
         .filter(Boolean);
-    const versions = files.map(getVersion).filter(Boolean);
+    const versions = needMigrate ? files : files.map(getVersion).filter(Boolean);
     console.log('*********** Applying labels ***********\n');
     addToText('*Check In*');
     addToText('{code}');
